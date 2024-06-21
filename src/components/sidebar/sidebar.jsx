@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import style from './sidebar.module.scss';
 
-export default function SideBar() {
+export default function SideBar({ isVisible }) {
     const [tab, setTab] = useState('');
     const location = useLocation();
 
@@ -22,10 +22,10 @@ export default function SideBar() {
 
     useEffect(() => {
         getActiveTab(location.pathname);
-    }, [location.pathname]); 
+    }, [location.pathname]);
 
     return (
-        <aside className={style.sidebar}>
+        <aside className={`${style.sidebar} ${isVisible ? style.visible : ''} `}>
             <Link className={style.sidebar__link} to={'/'}>ADMIN PANEL</Link>
 
             <ul className={style.sidebar__list}>

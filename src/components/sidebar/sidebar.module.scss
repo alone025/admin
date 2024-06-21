@@ -11,6 +11,10 @@
     top: 0;
     padding: 20px 30px;
 
+    &.visible {
+        display: none;
+    }
+
     .sidebar__link {
         font-size: 24px;
         font-family: 'Mulish';
