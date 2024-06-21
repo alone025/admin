@@ -17,7 +17,7 @@ export default function ProductsTable() {
                 <option value="3">Kiyimlar</option>
             </select>
             <select class={styles.select}>
-                <option selected disabled>Sub-Kategoriya tanlang</option>
+                <option selected disabled>Sub-Kategoriya</option>
                 <option value="1">Oshxona jihozlar</option>
                 <option value="2">Elektron jihozlar</option>
                 <option value="3">Kiyimlar</option>
