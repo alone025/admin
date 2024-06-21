@@ -1,0 +1,125 @@
+.table__filter {
+    display: flex;
+    .search {
+        width: 100%;
+        border: none;
+        padding: 20px 10px;
+        font-size: 14px;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            font-size: 14px;
+        }
+    }
+
+    .select {
+        padding: 8px 24px 8px 8px;
+        font-size: 16px;
+        border: none;
+        background-color: #fff;
+        cursor: pointer;
+        width: 200px;
+        outline: none;
+        margin-right: 30px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+    
+    .select::after {
+        content: '\25BE';
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+    
+   
+    
+    .select:focus::after {
+        color: #9ca3af;
+    }
+    
+    .select option {
+        background-color: #fff;
+        color: #1f2937;
+    }
+}
+
+
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+    margin: 20px 0;
+    background-color: #FFFFFF;
+    padding: 1px;
+    border-radius: 5px;
+}
+
+.responsiveTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 300px;
+    border: 10px !important;
+}
+
+.responsiveTable th,
+.responsiveTable td {
+    border-top: 1px solid #ececec50;
+    border-bottom: 1px solid #ececec50;
+    padding: 8px;
+    text-align: left;
+    padding: 20px 60px !important;
+}
+
+.responsiveTable td:last-child {
+    border-bottom: 1px solid #ffff !important;
+}
+
+.responsiveTable th {
+    background-color: #FFFFFF;
+    color: #7a7c80;
+    font-weight: bold;
+}
+
+.responsiveTable tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+.responsiveTable tr:hover {
+    background-color: #FFFFFF;
+}
+
+@media screen and (max-width: 600px) {
+    .responsiveTable thead {
+        display: none;
+    }
+
+    .responsiveTable tr {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .responsiveTable td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .responsiveTable td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
