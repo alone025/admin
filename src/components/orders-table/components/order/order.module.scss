@@ -1,0 +1,57 @@
+.order-container {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: #f9fafb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-title {
+    font-size: 1.875rem; // Equivalent to text-3xl
+    font-weight: 700;    // Equivalent to font-bold
+    margin-bottom: 1rem; // Equivalent to mb-4
+    color: #111827;
+}
+
+.products-label {
+    font-size: 1.25rem;  // Equivalent to text-xl
+    font-weight: 600;    // Equivalent to font-semibold
+    color: #4b5563;
+    display: block;      // Equivalent to block
+    margin-bottom: 0.5rem; // Equivalent to mb-2
+}
+
+.products-list {
+    list-style-type: none; // Equivalent to list-none
+    padding: 0;            // Equivalent to p-0
+    margin: 0 0 1rem 0;    // Equivalent to mb-4
+}
+
+.product-item {
+    font-size: 1rem;      // Equivalent to text-base
+    color: #1f2937;       // Equivalent to text-gray-800
+    padding-left: 1.25rem; // Equivalent to pl-5
+    margin-bottom: 0.5rem; // Equivalent to mb-2
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.5rem;
+        width: 0.25rem;  // Equivalent to w-1
+        height: 0.25rem; // Equivalent to h-1
+        background-color: #9ca3af; // Equivalent to bg-gray-400
+        border-radius: 50%; // Equivalent to rounded-full
+    }
+}
+
+.product-price {
+    font-size: 1.5rem;    // Equivalent to text-2xl
+    font-weight: 700;     // Equivalent to font-bold
+    color: #1f2937;       // Equivalent to text-gray-800
+    margin-top: 1rem;     // Equivalent to mt-4
+
+    .price-amount {
+        color: #10b981;   // Equivalent to text-green-500
+    }
+}

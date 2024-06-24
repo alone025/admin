@@ -1,4 +1,3 @@
-
 .sidebar {
     width: 350px;
     background-color: #FFFF;
@@ -40,24 +39,27 @@
             .item__link {
                 text-decoration: none;
                 color: #FFFF;
+                border: none;
+                background: transparent;
+                cursor: pointer;
             }
-        } 
+        }
 
         .list__item {
             width: 100% !important;
-            padding: 12px;
+            padding: 15px;
             border-radius: 5px;
-            background-color: #ececec50;   
+            background-color: #ececec50;
 
-            
+
 
             .item__link {
                 text-decoration: none;
                 color: #7a7c80;
-
-                
+                border: none;
+                background: transparent;
+                cursor: pointer;
             }
         }
     }
 }
-

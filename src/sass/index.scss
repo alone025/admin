@@ -1,18 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=swap');
 @import url('./modules/button.scss');
+@import url('./modules/modal.scss');
 
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: 'Mulish', Calibri;
+    list-style: none;
 }
 
 body {
-    background-color:  #ececec50;
+    background-color:  #ececec50 !important;
 }
 
 .page-section {
     width: 90%;
     margin: auto;
+}
+
+.error {
+    display: block;
+    color: #e53e3e; 
+    font-size: 0.875rem; 
+    margin-top: 0.15rem; 
 }

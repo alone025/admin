@@ -1,0 +1,32 @@
+.auth {
+    width: 500px;
+    margin: auto;
+    padding: 10px 20px;
+    background-color: #fff;
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+
+    .input {
+        display: block;
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #4a5568;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.375rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+ 
+        &:focus {
+            border-color: #63b3ed;
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(100, 165, 245, 0.5);
+            outline: none !important;
+        }
+    }
+}
