@@ -99,7 +99,7 @@ export default function DiscountsTable({
                         <td data-label="ID">{index + 1}</td>
                         <td data-label="Name">{item.uz.name}</td>
                         <td data-label="Name">{item.price}</td>
-                        <td style={{ display: 'flex', gap: '5px' }} data-label="Name">
+                        <td style={{ display: 'flex', gap: '5px', justifyContent:"flex-end"  }} data-label="Name">
                             <button onClick={handleDelete} data-id={item._id} className='button secondary' >O'chirish</button>
                             <button onClick={handleEditButton} data-id={item._id} className='button primary'>Tahrirlash</button>
                         </td>

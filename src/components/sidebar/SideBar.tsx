@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import style from './sidebar.module.scss';
 
-export default function SideBar({ isVisible, setTab, tab }: { isVisible: boolean, setTab: any, tab: string | null }) {
+export default function SideBar({ isVisible, setTab, tab, setvisible }: { setvisible: any, isVisible: boolean, setTab: any, tab: string | null }) {
 
     const changeTab = (e: React.MouseEvent<HTMLButtonElement>) => {
         const tab = e.currentTarget.getAttribute('data-page');
@@ -11,7 +11,7 @@ export default function SideBar({ isVisible, setTab, tab }: { isVisible: boolean
 
     return (
         <aside className={`${style.sidebar} ${isVisible ? style.visible : ''} `}>
-            <Link className={style.sidebar__link} to={'/'}>ADMIN PANEL</Link>
+            <Link className={style.sidebar__link} to={'/'}>ADMIN PANEL <span onClick={()=>{setvisible(true)}}>&times;</span> </Link>
 
             <ul className={style.sidebar__list}>
                 <li className={tab == 'products' ? style.active__item : style.list__item}>
@@ -28,6 +28,9 @@ export default function SideBar({ isVisible, setTab, tab }: { isVisible: boolean
                 </li>
                 <li className={tab == 'analitics' ? style.active__item : style.list__item}>
                     <button onClick={(e) => changeTab(e)} data-page="analitics" className={style.item__link}>Statistika</button>
+                </li>
+                <li className={tab == 'history' ? style.active__item : style.list__item}>
+                    <button onClick={(e) => changeTab(e)} data-page="history" className={style.item__link}>Tarix</button>
                 </li>
             </ul>
         </aside>

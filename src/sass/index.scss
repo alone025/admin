@@ -1,27 +1,115 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=swap');
-@import url('./modules/button.scss');
-@import url('./modules/modal.scss');
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=swap");
+@import url("./modules/button.scss");
+@import url("./modules/modal.scss");
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Mulish', Calibri;
-    list-style: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Mulish", Calibri;
+  list-style: none;
 }
 
 body {
-    background-color:  #ececec50 !important;
+  background-color: #ececec50 !important;
 }
 
 .page-section {
-    width: 90%;
-    margin: auto;
+  width: 90%;
+  margin: auto;
 }
 
 .error {
-    display: block;
-    color: #e53e3e; 
-    font-size: 0.875rem; 
-    margin-top: 0.15rem; 
+  display: block;
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.15rem;
 }
+
+@media screen and (max-width: 1000px) {
+  th {
+    font-size: 14px;
+  }
+  h1{
+    font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+    th {
+      font-size: 13px;
+    }
+    h1{
+        font-size: 20px;
+      }
+  }
+  
+  @media screen and (max-width: 700px) {
+
+    h1{
+        font-size: 18px;
+      }
+  }
+  
+  @media screen and (max-width: 600px) {
+
+    h1{
+        font-size: 17px;
+      }
+  }
+
+  @media screen and (max-width: 400px) {
+
+    h1{
+        font-size: 16px;
+      }
+  }
+
+  
+  .main-div-class{
+    margin-top: 30px;
+    margin-left: 360px;
+  }
+  .main-div-class-active{
+    margin-top: 30px;
+    margin-left: 0px;
+  }
+
+  #nav-active{
+    margin-left: 360px;
+  }
+
+  @media screen and (max-width:1200px) {
+    #nav-active{
+      margin-left: 300px;
+    }
+    .main-div-class{
+      margin-top: 30px;
+      margin-left: 300px;
+    }
+  }
+  @media screen and (max-width:1000px) {
+    #nav-active{
+      margin-left: 240px;
+    }
+    .main-div-class{
+      margin-left: 240px;
+    }
+  }
+
+  @media screen and (max-width:700px) {
+    #nav-active{
+      margin-left: 200px;
+    }
+    .main-div-class{
+      margin-left: 200px;
+    }
+  }
+  @media screen and (max-width:500px) {
+    #nav-active{
+      margin-left: 0;
+    }
+    .main-div-class{
+      margin-left: 0;
+    }
+  }

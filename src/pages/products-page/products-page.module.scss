@@ -1,53 +1,144 @@
 .products {
-    width: 90%;
-    margin: auto;
+  width: 90%;
+  margin: auto;
 
-    .products__head {
-        padding: 15px;
-        background: #fff;
-        border-radius: 5px !important;
+  .products__head {
+    padding: 15px;
+    background: #fff;
+    border-radius: 5px !important;
 
+    .products__categories {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      .head__list {
+        margin-top: 20px;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
 
-        .products__categories { 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            .head__list {
-                margin-top: 20px;
-                list-style: none;
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
+        .active__item {
+          width: 350px !important;
+          max-width: 350px !important;
+          padding: 12px;
+          border-radius: 5px;
+          background-color: #458ff6;
 
-                .active__item {
-                    width: 350px !important;
-                    max-width: 350px !important;
-                    padding: 12px;
-                    border-radius: 5px;
-                    background-color: #458FF6;
-
-                    .item__link {
-                        text-decoration: none;
-                        color: #fff;
-                        font-size: 14px !important;
-                    }
-                }
-
-                .list__item {
-                    width: 350px !important;
-                    max-width: 350px !important;
-                    padding: 12px;
-                    border-radius: 5px;
-                    background-color: #ececec50;
-
-                    .item__link {
-                        text-decoration: none;
-                        color: #7a7c80;
-                        font-size: 14px !important;
-                    }
-                }
-
-            }
+          .item__link {
+            text-decoration: none;
+            color: #fff;
+            font-size: 14px !important;
+          }
         }
+
+        .list__item {
+          width: 350px !important;
+          max-width: 350px !important;
+          padding: 12px;
+          border-radius: 5px;
+          background-color: #ececec50;
+
+          .item__link {
+            text-decoration: none;
+            color: #7a7c80;
+            font-size: 14px !important;
+          }
+        }
+      }
+      button {
+        height: 46px;
+        width: 200px;
+        margin-bottom: 85px;
+      }
     }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .products {
+    .products__head {
+      .products__categories {
+        button {
+          width: 150px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 940px) {
+  .products {
+    .products__head {
+      .products__categories {
+        .head__list {
+          .active__item,
+          .list__item {
+            max-width: 300px !important;
+            width: 300px !important;
+          }
+        }
+
+        button {
+          width: 150px;
+          height: 44px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .products {
+    .products__head {
+      .products__categories {
+        flex-wrap: wrap;
+        button {
+          margin-bottom: 15px;
+          margin-top: 15px;
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .products {
+    .products__head {
+      .products__categories {
+        .head__list {
+          .list__item,
+          .active__item {
+            max-width: 250px !important;
+            width: 250px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .products {
+    .products__head {
+      .products__categories {
+        button {
+          height: 38px;
+        }
+        .head__list {
+          .list__item,
+          .active__item {
+            max-width: 150px !important;
+            width: 150px !important;
+            padding: 10px;
+            a{
+              font-size: 13px !important;
+            }
+          }
+        }
+      }
+    }
+  }
 }

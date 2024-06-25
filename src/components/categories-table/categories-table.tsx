@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductService from '../../services/ProductService';
 import EditModal from '../UI/edit-modal/EditModal';
 import CategoryEditForm from './components/edit-form';
@@ -10,11 +10,14 @@ export default function CategoriesTable({ data }: any) {
 
     const [categoryRuName, setCategoryRuName] = useState<string>('');
     const [category, setCategory] = useState<any>();
+    const [filterData, setFilterData] = useState<any>(data);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-
+    useEffect(()=>(
+        setFilterData(data)
+    ),[data])
 
     const deleteCategory = (event: any) => {
         const id = event.target.getAttribute('data-id');
@@ -40,8 +43,17 @@ export default function CategoriesTable({ data }: any) {
             });
     }
 
+    function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+        
+        const newsearchdata = data.filter((product) =>
+          product.uz.name.toLowerCase().includes(event.target.value.toLowerCase())
+        );
+   
+          setFilterData(newsearchdata);
+      }
+
     return <div className={styles.tableContainer}>
-        <input className={styles.search} type="text" placeholder='Kategoriya nomini yozing... ' />
+        <input className={styles.search} type="text" placeholder='Kategoriya nomini yozing... ' onChange={handleSearchChange} />
         <table className={styles.responsiveTable}>
             <thead>
                 <tr>
@@ -51,16 +63,16 @@ export default function CategoriesTable({ data }: any) {
                 </tr>
             </thead>
             <tbody>
-                {data.map((item: any, index: number) => (
+                {filterData.map((item: any, index: number) => (
                     <tr key={index + 1}>
                         <td data-label="ID">{index + 1}</td>
                         <td data-label="Name">{item.uz.name}</td>
-                        <td style={{ display: 'flex', gap: '5px' }} data-label="Name">
+                        <td style={{ display: 'flex', gap: '5px', justifyContent:"flex-end"  }} data-label="Name">
                             <button data-id={item._id} className='button secondary' onClick={(e) => deleteCategory(e)} >O'chirish</button>
                             <button data-id={item._id} className='button primary' onClick={(e) => handleEditButton(e)}>Tahrirlash</button>
                         </td>
                     </tr>
-                ))}
+                ))} 
             </tbody>
         </table>
         <EditModal sendData={handleEdit} isOpen={isModalOpen} onClose={closeModal} title='Kategoriyani tahrirlang'>

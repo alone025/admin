@@ -49,7 +49,7 @@ export default function OrdersTable() {
                         <td data-label="Name">{item.author.lastName}</td>
                         <td data-label="Name">{item.author.telephone}</td>
                         <td data-label="Name">{item.price}</td>
-                        <td style={{ display: 'flex', gap: '5px' }} data-label="Name">
+                        <td style={{ display: 'flex', gap: '5px', justifyContent:"flex-end"  }} data-label="Name">
                             <button onClick={viewHandle} data-id={item._id} className='button primary'>Batafsil</button>
                         </td>
                     </tr>

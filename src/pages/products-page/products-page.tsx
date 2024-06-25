@@ -26,7 +26,7 @@ export default function ProductsPage() {
             console.log(data.data)
             setProducts(data.data)
         });      
-    }, [])
+    }, []) 
 
 
     
@@ -45,7 +45,7 @@ export default function ProductsPage() {
                     <li onClick={() => setTab('products')} className={tab == 'products' ? style.active__item : style.list__item}><Link className={style.item__link} to={'#'}>Mahsulotlar</Link></li>
                 </ul>
 
-                <button onClick={openModal} className='button primary' style={{ height: '50px', width: '200px' }} >Qo'shish</button>
+                <button onClick={openModal} className='button primary' >Qo'shish</button>
             </div>
         </div>
 

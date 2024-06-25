@@ -1,5 +1,5 @@
 .auth {
-    width: 500px;
+    max-width: 500px;
     margin: auto;
     padding: 10px 20px;
     background-color: #fff;
@@ -27,6 +27,15 @@
             outline: 0;
             box-shadow: 0 0 0 3px rgba(100, 165, 245, 0.5);
             outline: none !important;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .auth{
+        .input{
+            padding: 0.4rem 0.55rem;
+            font-size: 0.8rem;
         }
     }
 }

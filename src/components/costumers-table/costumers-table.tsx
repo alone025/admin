@@ -9,10 +9,15 @@ export default function CostumersTable() {
         CostumerService.getCostumers().then(data => setCostumers(data.data))
     }, [])
 
+    function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+        // setSearchQuery(event.target.value);
+        CostumerService.search(event.target.value).then(data => setCostumers(data.data))
+      }
+
 
     return <div className={styles.tableContainer}>
         <div className={styles.table__filter}>
-            <input className={styles.search} type="text" placeholder='Xardifor izlang ...' />
+            <input className={styles.search} onChange={handleSearchChange} type="text" placeholder='Xardifor izlang ...' />
         </div>
         <table className={styles.responsiveTable}>
             <thead>
@@ -35,7 +40,7 @@ export default function CostumersTable() {
                         <td data-label="Name">{item.telephone}</td>
                         <td data-label="Name">{item.cashback.barCode}</td>
                         <td data-label="Name">{item.cashback.balance}</td>
-                        <td style={{ display: 'flex', gap: '5px' }} data-label="Name">
+                        <td style={{ display: 'flex', gap: '5px', justifyContent:"flex-end"  }} data-label="Name">
                             <button className='button secondary' >Ayirish</button>
                             <button className='button primary'>Qo'shish</button>
                         </td>
