@@ -5,9 +5,8 @@ import CategoriesTable from '../../components/categories-table/categories-table'
 import SubCategoriesTable from '../../components/subcategories-table/subcategories-table';
 import ProductsTable from '../../components/products-table/products-table';
 import ProductsModal from '../../components/products-modal/products-modal';
-import { useContext, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import ProductService from '../../services/ProductService';
-import { Context } from '../../main';
 
 export default function ProductsPage() {
     const [tab, setTab] = useState<string>('categories');

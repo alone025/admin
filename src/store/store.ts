@@ -4,7 +4,6 @@ import AuthService from "../services/AuthService";
 import axios from "axios";
 import { AuthResponse } from "../models/response/AuthResponse";
 import { API_URL } from "../http";
-import ProductService from "../services/ProductService";
 
 export default class Store {
   admin: IUser = {} as IUser;

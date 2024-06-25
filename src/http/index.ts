@@ -1,7 +1,6 @@
 import axios from "axios";
 import { AuthResponse } from "../models/response/AuthResponse";
-import { store } from "../main";
-import { IUser } from "../models/IUser";
+
 
 export const API_URL = `http://1544713-cy69884.twc1.net/api`;
 
