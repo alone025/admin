@@ -37,7 +37,7 @@ export default class Store {
       this.setAuth(true);
       this.setUser(response.data.data.admin);
     } catch (e: any) {
-      console.log(e.response?.data?.data.message);
+      console.log(e.response?.data);
     }
   }
 
