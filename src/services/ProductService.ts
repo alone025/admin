@@ -67,17 +67,17 @@ export default class ProductService {
         return response.data;
     }
 
-    static async getCategories(): Promise<Category[]> {
+    static async getCategories(){
         const response = await $api.get('/categories/all');
         return response.data;
     }
 
-    static async getSubCategories(): Promise<SubCategory[]> {
+    static async getSubCategories() {
         const response = await $api.get('/sub-categories/all');
         return response.data;
     }
 
-    static async getProducts(): Promise<Product[]> {
+    static async getProducts() {
         const response = await $api.get('/products/all');
         return response.data;
     }
@@ -136,7 +136,7 @@ export default class ProductService {
         return response.data;
     }
 
-    static async getProduct(productId: string): Promise<Product> {
+    static async getProduct(productId: string) {
         const response = await $api.get(`/products/get/${productId}`);
         return response.data;
     }
