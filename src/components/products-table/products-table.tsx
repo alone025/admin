@@ -44,7 +44,7 @@ export default function ProductsTable({ data }: ProductsTableProps) {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<string>("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | undefined>();
 
   const [filterCategory, setFilterCategory] = useState<Category[]>([]);
   const [filterSubCategory, setFilterSubCategory] = useState<SubCategory[]>([]);

@@ -111,7 +111,7 @@ export default class ProductService {
         category: string,
         subCategory: string,
         price: string,
-        photo: File | null
+        photo: File | undefined
     ): Promise<Product> {
         const response = await axios.put(
             `${API_URL}/products/update/${id}`,
