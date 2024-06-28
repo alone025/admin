@@ -1,0 +1,115 @@
+// ProductForm.module.scss
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+  
+    .section {
+      padding: 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background-color: #f8fafc;
+  
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #2d3748;
+      }
+  
+      .inputGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+  
+    input[type="text"],
+    textarea,
+    select,
+    input[type="file"] {
+      padding: 0.75rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: #fff;
+      color: #2d3748;
+    }
+  
+    select:disabled {
+      color: #a0aec0;
+    }
+  
+    input[type="file"] {
+      padding: 0.5rem 0.75rem;
+    }
+  
+    input[type="file"]::file-selector-button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background-color: #edf2f7;
+      cursor: pointer;
+    }
+  
+    input[type="file"]::file-selector-button:hover {
+      background-color: #e2e8f0;
+    }
+  
+    img {
+      margin-top: 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      width: 100px;
+      height: 100px;
+    }
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .container {
+      gap: 1.75rem;
+      .section {
+        padding: 0.75rem;
+        h1 {
+          font-size: 20px;
+        }
+      }
+      input[type="text"],
+      textarea,
+      select,
+      input[type="file"] {
+        padding: 0.55rem;
+        font-size: 14px;
+      }
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .container {
+      .section {
+        padding: 0.55rem;
+        h1 {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    .container {
+      padding: 0;
+      .section {
+        h1 {
+          font-size: 16px;
+        }
+      }
+      input[type="text"],
+      textarea,
+      select,
+      input[type="file"] {
+        font-size: 13px;
+      }
+    }
+  }
+  

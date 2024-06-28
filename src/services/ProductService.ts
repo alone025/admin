@@ -28,17 +28,6 @@ interface Product {
     photoUrl: string;
 }
 
-// interface ProductData {
-//     uzName: string;
-//     uzDescription: string;
-//     ruName: string;
-//     ruDescription: string;
-//     category: string;
-//     subCategory: string;
-//     price: string;
-//     photo: File | null;
-// }
-
 export default class ProductService {
     static async createProduct(
         name: string,
@@ -98,7 +87,7 @@ export default class ProductService {
     }
 
     static async updateCategory(id: string, data: Partial<Category>): Promise<Category> {
-        const response = await $api.put(`categories/update/${id}`, data);
+        const response = await $api.put(`/categories/update/${id}`, data);
         return response.data;
     }
 
@@ -122,7 +111,7 @@ export default class ProductService {
     }
 
     static async updateSubCategory(id: string, data: Partial<SubCategory>): Promise<SubCategory> {
-        const response = await $api.put(`sub-categories/update/${id}`, data);
+        const response = await $api.put(`/sub-categories/update/${id}`, data);
         return response.data;
     }
 

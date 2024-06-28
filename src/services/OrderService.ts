@@ -12,4 +12,10 @@ export default class OrderService {
         const order = await $api.get(`/order/get/${id}`);
         return order.data;
     }
+
+    
+    static async getExel() {
+        const order = await $api.get(`/analiytics/exel/users`);
+        return order.data;
+    }
 }

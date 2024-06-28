@@ -11,6 +11,8 @@ import CostumersPage from "./pages/costumers-page/CostumersPage";
 import OrdersPage from "./pages/orders-page/OrdersPage";
 import AnalysPage from "./pages/analys-page/analys-page";
 import HistoryPage from "./pages/history-page/history-page";
+import CreateAdminPage from "./pages/createAdmin-page/createAdminPage";
+import CreateAdminService from "./services/createAdminService";
 
 const App: FC = () => {
   const { store } = useContext(Context);
@@ -30,6 +32,10 @@ const App: FC = () => {
       console.log("app",localStorage.getItem("token"));
     }
     localStorage.setItem("tab", "products");
+    CreateAdminService.getAdmins().then(e =>{ console.log(e.data)
+    localStorage.setItem("admins-list-525", e.data)}
+    )
+
   }, []);
 
   const toggleSidebar = () => {
@@ -65,6 +71,7 @@ const App: FC = () => {
           {tab == "orders" ? <OrdersPage /> : ""}
           {tab == "analitics" ? <AnalysPage /> : ""}
           {tab == "history" ? <HistoryPage /> : ""}
+          {tab == "admin" ? <CreateAdminPage /> : ""}
         </main>
       </div>
     );

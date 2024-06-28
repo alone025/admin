@@ -14,11 +14,13 @@ interface AnalizItem {
 
 export default function AnaltikaTable() {
   const [analiz, setAnaliz] = useState<Array<AnalizItem>>([]);
+  const [customer, setcustomer] = useState<Array<AnalizItem>>([]);
 
   useEffect(() => {
     AnalizServise.getOrders().then((data) => {
       console.log(data.data);
-      setAnaliz(data.data);
+      setAnaliz(data.data.topProducts);
+      setcustomer(data.data.topCustomers)
     });
   }, []);
 
@@ -41,6 +43,15 @@ export default function AnaltikaTable() {
         </thead>
         <tbody>
           {analiz.map((item: AnalizItem, index: number) => (
+            <tr key={item._id}>
+              <td data-label="ID">{index + 1}</td>
+              <td data-label="Name">{item.author.firstName}</td>
+              <td data-label="Name">{item.author.lastName}</td>
+              <td data-label="Name">{item.author.telephone}</td>
+              <td data-label="Name">{item.price}</td>
+            </tr>
+          ))}
+           {customer.map((item: AnalizItem, index: number) => (
             <tr key={item._id}>
               <td data-label="ID">{index + 1}</td>
               <td data-label="Name">{item.author.firstName}</td>

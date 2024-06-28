@@ -82,7 +82,7 @@ export default function ProductsModal({
 
     if (file) {
       setSelectedFile(file);
-
+ 
       const reader = new FileReader();
       reader.readAsDataURL(file);
     }

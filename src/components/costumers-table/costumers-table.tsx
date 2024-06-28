@@ -30,7 +30,7 @@ export default function CostumersTable() {
     return (
         <div className={styles.tableContainer}>
             <div className={styles.table__filter}>
-                <input className={styles.search} onChange={handleSearchChange} type="text" placeholder='Xardifor izlang ...' />
+                <input className={styles.search} onChange={handleSearchChange} type="text" placeholder='Xaridorni izlang ...' />
             </div>
             <table className={styles.responsiveTable}>
                 <thead>

@@ -108,6 +108,17 @@ const SideBar: React.FC<SideBarProps> = ({
             Tarix
           </button>
         </li>
+        <li
+          className={tab === "admin" ? style.active__item : style.list__item}
+        >
+          <button
+            onClick={(e) => changeTab(e)}
+            data-page="admin"
+            className={style.item__link}
+          >
+            Admin Qo'shish
+          </button>
+        </li>
       </ul>
     </aside>
   );

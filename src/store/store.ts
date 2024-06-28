@@ -2,6 +2,7 @@ import { IUser } from "../models/IUser";
 import { makeAutoObservable } from "mobx";
 import AuthService from "../services/AuthService";
 
+
 export interface Euser {
   response: {
     data: {
@@ -11,6 +12,7 @@ export interface Euser {
     };
   };
 }
+
 
 export default class Store {
   admin = {} as IUser;
@@ -37,14 +39,35 @@ export default class Store {
 
   async login(email: string, password: string) {
     try {
+
+
+      // const userDataPromise: Promise<Adm[]> = CreateAdminService.getAdmins();
+      // userDataPromise.then((userData: Adm[]) => {
+      //   console.log(userData);
+      // });
+      
+      // console.log(userDataPromise);
+      
+      // userDataPromise.then((userData: Adm[]) => {
+      //   const userExists = userData.some(
+      //     (user) => user.adminName === email && user.password === password
+      //   );
+      
+      //   if (userExists) {
+      //     localStorage.setItem("loginTrueAccept", "tasdiqlandi");
+      //     this.setAuth(true);
+      //   }
+      // });
+  
       const response = await AuthService.login(email, password);
       console.log(response);
       localStorage.setItem("token", response.data.data.accessToken);
       localStorage.setItem("refreshtoken", response.data.data.refreshToken);
       localStorage.setItem("loginTrueAccept", "tasdiqlandi");
       this.setAuth(true);
-      this.setUser(response.data.data.admin);
-      console.log("cookie", localStorage.getItem("refreshtoken"));
+      this.setUser(response.data.data.admin)
+
+     
     } catch (e) {
       console.log("Store ts da login da muammo");
     }

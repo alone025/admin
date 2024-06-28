@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ModalProps {
-  isOpen: boolean;
+  isOpen: boolean | undefined;
   onClose: () => void;
   sendData: () => void;
   title: string;
