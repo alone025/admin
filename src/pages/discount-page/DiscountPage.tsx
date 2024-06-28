@@ -5,18 +5,35 @@ import Modal from '../../components/UI/modal/Modal';
 import DiscountForm from '../../components/discount-form/discount-form';
 import DiscountService from '../../services/DiscountService';
 
+interface Errors {
+    name: string;
+    description: string;
+    ruName: string;
+    ruDescription: string;
+    price: string;
+    file: string;
+}
+
+interface DiscountData {
+    uzName: string;
+    uzDescription: string;
+    ruName: string;
+    ruDescription: string;
+    price: string;
+    photo: File | null;
+}
 
 const DiscountPage: FC = () => {
-    const [name, setName] = useState<any>();
-    const [description, setDescription] = useState<any>();
-    const [ruName, setRuName] = useState<any>();
-    const [ruDescription, setRuDescription] = useState<any>();
-    const [price, setPrice] = useState<any>();
-    const [selectedFile, setSelectedFile] = useState<any>();
+    const [name, setName] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [ruName, setRuName] = useState<string>('');
+    const [ruDescription, setRuDescription] = useState<string>('');
+    const [price, setPrice] = useState<string>('');
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [errors, setErrors] = useState({
+    const [errors, setErrors] = useState<Errors>({
         name: '',
         description: '',
         ruName: '',
@@ -27,7 +44,7 @@ const DiscountPage: FC = () => {
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => {
-        setIsModalOpen(false)
+        setIsModalOpen(false);
     };
 
     const handleAddButton = () => {
@@ -45,16 +62,24 @@ const DiscountPage: FC = () => {
 
     const handleAdd = async () => {
         const newErrors = {
-            name: name?.trim() ? '' : 'Iltimos nomini yozing',
-            description: description?.trim() ? '' : 'iltimos haqidani yozing',
-            ruName: ruName?.trim() ? '' : 'Iltimos rus tili nomini yozing',
-            ruDescription: ruDescription?.trim() ? '' : 'Iltimos haqidani ruschasini yozing',
-            price: price?.trim() ? '' : 'Iltimos narxini yozing',
+            name: name.trim() ? '' : 'Iltimos nomini yozing',
+            description: description.trim() ? '' : 'iltimos haqidani yozing',
+            ruName: ruName.trim() ? '' : 'Iltimos rus tili nomini yozing',
+            ruDescription: ruDescription.trim() ? '' : 'Iltimos haqidani ruschasini yozing',
+            price: price ? '' : 'Iltimos narxini yozing',
             file: selectedFile ? '' : 'Iltimos maxsulot rasmini tanlang',
         };
         setErrors(newErrors);
 
-        await DiscountService.createDiscount(name, description, ruName, ruDescription, price, selectedFile);
+        const discountData: DiscountData = {
+            uzName: name,
+            uzDescription: description,
+            ruName: ruName,
+            ruDescription: ruDescription,
+            price: price,
+            photo: selectedFile,
+        };
+        await DiscountService.createDiscount(discountData);
 
         window.location.href = '/'
         closeModal();
@@ -69,38 +94,40 @@ const DiscountPage: FC = () => {
         }
     };
 
-    return <section className={styles.dicsounts}>
-        <div className={styles.dicsounts_head}>
-            <h1>Chegirmalar: </h1>
-            <button onClick={handleAddButton} className='button primary'>Qo'shish</button>
-        </div>
+    return (
+        <section className={styles.dicsounts}>
+            <div className={styles.dicsounts_head}>
+                <h1>Chegirmalar: </h1>
+                <button onClick={handleAddButton} className='button primary'>Qo'shish</button>
+            </div>
 
-        <DiscountsTable
-            setName={setName}
-            name={name}
-            setRuName={setRuName}
-            ruName={ruName}
-            setDescription={setDescription}
-            description={description}
-            setRuDescription={setRuDescription}
-            ruDescription={ruDescription}
-            setPrice={setPrice}
-            price={price}
-            handleFileChange={handleFileChange}
-            selectedFile={selectedFile}
-        />
-        <Modal onClose={closeModal} isOpen={isModalOpen} sendData={handleAdd} title='Chegirma qoshing'>
-            <DiscountForm
+            <DiscountsTable
                 setName={setName}
+                name={name}
                 setRuName={setRuName}
+                ruName={ruName}
                 setDescription={setDescription}
+                description={description}
                 setRuDescription={setRuDescription}
+                ruDescription={ruDescription}
                 setPrice={setPrice}
-                errors={errors}
+                price={price}
                 handleFileChange={handleFileChange}
+                selectedFile={selectedFile}
             />
-        </Modal>
-    </section>
+            <Modal onClose={closeModal} isOpen={isModalOpen} sendData={handleAdd} title='Chegirma qoshing'>
+                <DiscountForm
+                    setName={setName}
+                    setRuName={setRuName}
+                    setDescription={setDescription}
+                    setRuDescription={setRuDescription}
+                    setPrice={setPrice}
+                    errors={errors}
+                    handleFileChange={handleFileChange}
+                />
+            </Modal>
+        </section>
+    );
 }
 
 export default DiscountPage;

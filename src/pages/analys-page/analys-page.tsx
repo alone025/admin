@@ -5,7 +5,7 @@ export default function AnalysPage () {
     return <section className={styles.analys}>
         <div className={styles.analys_head}>
             <h1>Stastika: </h1>
-            <button className='button primary'>Excel yuklash</button>
+            <button className='button primary'>Excel yuklab olish</button>
         </div>
 
         <AnaltikaTable />

@@ -1,6 +1,15 @@
 import styles from './categories-form.module.scss'
 
-export default function CategoriesForm({ setCategoryName, setCategoryRuName, errors }: { setCategoryName: any, setCategoryRuName: any, errors: any }) {
+interface CategoriesFormProps {
+    setCategoryName: (name: string) => void;
+    setCategoryRuName: (name: string) => void;
+    errors: {
+        categoryName?: string;
+        categoryRuName?: string;
+    };
+}
+
+export default function CategoriesForm({ setCategoryName, setCategoryRuName, errors }: CategoriesFormProps ) {
     return (
         <>
             <div className={styles.container}>

@@ -4,23 +4,42 @@ import styles from "./subcategories-table.module.scss";
 import EditModal from "../UI/edit-modal/EditModal";
 import SubCategoryEditForm from "./components/subcategories-edit";
 
-export default function SubCategoriesTable({ data, setSubCategories }: any) {
+interface SubCategory {
+  _id: string;
+  uz: { name: string };
+  ru: { name: string };
+  category: { _id: string; uz: { name: string } };
+  categoryId: string | null
+}
+
+
+interface Category {
+  _id: string;
+  uz: { name: string };
+}
+
+interface SubCategoriesTableProps {
+  data: SubCategory[];
+  setSubCategories: (subCategories: SubCategory[]) => void;
+}
+
+export default function SubCategoriesTable({ data, setSubCategories }: SubCategoriesTableProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [subCategoryName, setSubCategoryName] = useState<string>("");
   const [subCategoryRuName, setSubCategoryRuName] = useState<string>("");
-  const [subCategory, setSubCategory] = useState<any>();
-  const [category, setCategory] = useState<any>();
-  const [categories, setCategories] = useState<any>([]);
-  const [filterCategory, setFilterCategory] = useState<any>();
-  const [filteredCategory, setFilteredCategory] = useState<any>();
-  const [searchqueary, setsearchquery] = useState<any>();
-  const [filterData, setFilterData] = useState<any>(data);
+  const [subCategory, setSubCategory] = useState<SubCategory | null>(null);
+  const [category, setCategory] = useState<string | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [filterCategory, setFilterCategory] = useState<Category[]>([]);
+  const [filteredCategory, setFilteredCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filterData, setFilterData] = useState<SubCategory[]>(data);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const Categories = await ProductService.getCategories();
-        setFilterCategory(Categories.data);
+        const categoriesResponse = await ProductService.getCategories();
+        setFilterCategory(categoriesResponse);
       } catch (error) {
         console.log("Xato");
       }
@@ -32,75 +51,76 @@ export default function SubCategoriesTable({ data, setSubCategories }: any) {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const deleteSubCategory = (event: any) => {
-    const id = event.target.getAttribute("data-id");
-    ProductService.deleteSubCategory(id).then(() => {
+  const deleteSubCategory = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const id = event.currentTarget.getAttribute("data-id");
+    if (id) {
+      await ProductService.deleteSubCategory(id);
       window.location.href = "/";
-    });
+    }
   };
 
-  const handleEditButton = async (event: any) => {
-    const id = event.target.getAttribute("data-id");
-    const response = await ProductService.getSubCategory(id);
-    const categories = await ProductService.getCategories();
+  const handleEditButton = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const id = event.currentTarget.getAttribute("data-id");
+    if (id) {
+      const response = await ProductService.getSubCategory(id);
+      const categoriesResponse = await ProductService.getCategories();
 
-    const data = response.data;
-    console.log(data.subCategory);
-    setSubCategory(data.subCategory);
-    setCategories(categories.data);
-    setSubCategoryName(data.subCategory.uz.name);
-    setSubCategoryRuName(data.subCategory.ru.name);
-    openModal();
+      setSubCategory(response);
+      setCategories(categoriesResponse);
+      setSubCategoryName(response.uz.name);
+      setSubCategoryRuName(response.ru.name);
+      openModal();
+    }
   };
 
-  const handleEdit = () => {
-    ProductService.updateSubCategory(subCategory._id, {
-      uz: { name: subCategoryName },
-      ru: { name: subCategoryRuName },
-      category: category,
-    }).then(async () => {
-      const subCategories = await ProductService.getSubCategories();
-      setSubCategories(subCategories.data);
+  const handleEdit = async () => {
+    if (subCategory) {
+      await ProductService.updateSubCategory(subCategory._id, {
+        uz: { name: subCategoryName },
+        ru: { name: subCategoryRuName },
+        categoryId: category,
+      });
+      const subCategoriesResponse = await ProductService.getSubCategories();
+      setSubCategories(subCategoriesResponse);
       closeModal();
-    });
+    }
   };
 
   function handleCategoryChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setFilteredCategory(event.target.value);
+    const selectedCategory = event.target.value;
+    setFilteredCategory(selectedCategory);
+
     const newData = data.filter(
-      (product) => product.category.uz.name === event.target.value
+      (product) => product.category.uz.name === selectedCategory
     );
 
-    if (searchqueary) {
+    if (searchQuery) {
       const newDataSearch = newData.filter((product) =>
-        product.uz.name.toLowerCase().includes(searchqueary.toLowerCase())
+        product.uz.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilterData(newDataSearch);
-   
     } else {
       setFilterData(newData);
-     
     }
-
   }
+
   function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setsearchquery(event.target.value);
-    const newsearchdata = data.filter((product) =>
-      product.uz.name.toLowerCase().includes(event.target.value.toLowerCase())
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    const newSearchData = data.filter((product) =>
+      product.uz.name.toLowerCase().includes(query.toLowerCase())
     );
+
     if (filteredCategory) {
-      const newDataSearch = newsearchdata.filter(
+      const newDataSearch = newSearchData.filter(
         (product) => product.category.uz.name === filteredCategory
       );
       setFilterData(newDataSearch);
-    
     } else {
-      setFilterData(newsearchdata);
-      
+      setFilterData(newSearchData);
     }
   }
-
-  
 
   return (
     <div className={styles.tableContainer}>
@@ -115,8 +135,8 @@ export default function SubCategoriesTable({ data, setSubCategories }: any) {
           <option selected disabled>
             Kategoriya tanlang
           </option>
-          {filterCategory?.map((e: any, ec: any) => (
-            <option value={e.uz.name} key={ec}>
+          {filterCategory.map((e) => (
+            <option value={e.uz.name} key={e._id}>
               {e.uz.name}
             </option>
           ))}
@@ -132,7 +152,7 @@ export default function SubCategoriesTable({ data, setSubCategories }: any) {
           </tr>
         </thead>
         <tbody>
-          {filterData.map((item: any, index: number) => (
+          {filterData.map((item, index) => (
             <tr key={item._id}>
               <td data-label="ID">{index + 1}</td>
               <td data-label="Name">{item.uz.name}</td>

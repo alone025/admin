@@ -6,7 +6,7 @@ export default function CostumersPage() {
     <section className={styles.costumers}>
       <div className={styles.costumers__head}>
         <h1>Xaridorlar: </h1>
-        <button className="button primary">Excel yuklash</button>
+        <button className="button primary">Excel yuklab olish</button>
       </div>
 
       <CostumersTable />

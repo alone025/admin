@@ -1,7 +1,47 @@
 
 import styles from './products-edit.module.scss';
 
-const ProductsEditForm = ({
+interface Category {
+    _id: string;
+    uz: {
+        name: string;
+    };
+}
+
+interface SubCategory {
+    _id: string;
+    category: {
+        _id: string;
+    };
+    uz: {
+        name: string;
+    };
+}
+
+interface ProductsEditFormProps {
+    setName: (name: string) => void;
+    name: string;
+    setDescription: (description: string) => void;
+    description: string;
+    setRuName: (ruName: string) => void;
+    ruName: string;
+    setRuDescription: (ruDescription: string) => void;
+    ruDescription: string;
+    setPrice: (price: string) => void;
+    price: string;
+    setCategory: (category: string) => void;
+    category: string;
+    setSubCategory: (subCategory: string) => void;
+    subCategory: string;
+    handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    selectedFile: string;
+    subCategories: SubCategory[];
+    categories: Category[];
+}
+
+
+
+const ProductsEditForm: React.FC<ProductsEditFormProps> = ({
     setName,
     name,
     setDescription,
@@ -20,10 +60,10 @@ const ProductsEditForm = ({
     selectedFile,
     subCategories,
     categories
-}: any) => {
+}) => {
 
     const filteredSubCategories = category
-        ? subCategories.filter((subCategory: any) => subCategory.category._id === category)
+        ? subCategories.filter((subCategory) => subCategory.category._id === category)
         : subCategories;
 
 
@@ -82,7 +122,7 @@ const ProductsEditForm = ({
                             <option disabled selected value="dd">
                                 Kategoriya tanlang
                             </option>
-                            {categories.map((category: any) => (
+                            {categories.map((category) => (
                                 <option key={category._id} value={category._id}>
                                     {category.uz.name}
                                 </option>
@@ -96,7 +136,7 @@ const ProductsEditForm = ({
                             <option disabled selected value="dd">
                                 Subkategoriya tanlang
                             </option>
-                            {filteredSubCategories.map((subCategory: any) => (
+                            {filteredSubCategories.map((subCategory) => (
                                 <option key={subCategory._id} value={subCategory._id}>
                                     {subCategory.uz.name}
                                 </option>

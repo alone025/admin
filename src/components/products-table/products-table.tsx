@@ -4,28 +4,64 @@ import ProductsEditForm from "./components/products-edit";
 import styles from "./products-table.module.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 
-export default function ProductsTable({ data }: { data: any }) {
+interface Category {
+  _id: string;
+  uz: {
+    name: string;
+  };
+}
+
+interface SubCategory {
+  _id: string;
+  uz: {
+    name: string;
+  };
+  category: {
+    _id: string;
+  };
+}
+
+interface Product {
+  _id: string;
+  uz: {
+    name: string;
+    description: string;
+  };
+  ru: {
+    name: string;
+    description: string;
+  };
+  price: string;
+  category: Category;
+  subCategory: SubCategory;
+}
+
+interface ProductsTableProps {
+  data: Product[];
+}
+
+export default function ProductsTable({ data }: ProductsTableProps) {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const [filterCategory, setFilterCategory] = useState<any>();
-  const [filterSubCategory, setFilterSubCategory] = useState<any>();
-  const [filteredCategory, setFilteredCategory] = useState<any>();
-  const [filteredSubCategory, setFilteredSubCategory] = useState<any>();
-  const [searchqueary, setsearchquery] = useState<any>();
-  const [filterData, setFilterData] = useState<any>(data);
+  const [filterCategory, setFilterCategory] = useState<Category[]>([]);
+  const [filterSubCategory, setFilterSubCategory] = useState<SubCategory[]>([]);
+  const [filteredCategory, setFilteredCategory] = useState<string>("");
+  const [filteredSubCategory, setFilteredSubCategory] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filterData, setFilterData] = useState<Product[]>(data);
 
   // ru
   const [ruName, setRuName] = useState<string>("");
   const [ruDescription, setRuDescription] = useState<string>("");
 
-  const [category, setCategory] = useState<any>([]);
-  const [subCategory, setSubCategory] = useState<any>([]);
-  const [categories, setCategories] = useState<any>([]);
-  const [subCategories, setSubCategories] = useState<any>([]);
-  const [product, setProduct] = useState<any>();
+  const [category, setCategory] = useState<string>("");
+  const [subCategory, setSubCategory] = useState<string>("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+  const [product, setProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -48,9 +84,9 @@ export default function ProductsTable({ data }: { data: any }) {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const deleteProduct = (event: any) => {
-    const id = event.target.getAttribute("data-id");
-    ProductService.deleteProduct(id).then(() => {
+  const deleteProduct = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const id = event.currentTarget.getAttribute("data-id");
+    ProductService.deleteProduct(id!).then(() => {
       window.location.href = "/";
     });
   };
@@ -66,17 +102,17 @@ export default function ProductsTable({ data }: { data: any }) {
     }
   };
 
-  const handleEditButton = async (event: any) => {
-    const id = event.target.getAttribute("data-id");
-    const product = await ProductService.getProduct(id);
+  const handleEditButton = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const id = event.currentTarget.getAttribute("data-id");
+    const product = await ProductService.getProduct(id!);
     const categoriesRes = await ProductService.getCategories();
     const subCategoriesRes = await ProductService.getSubCategories();
     setName(product.data.uz.name);
     setDescription(product.data.uz.description);
-    setRuName(product.data.ru.description);
+    setRuName(product.data.ru.name);
     setRuDescription(product.data.ru.description);
-    setCategory(product.data.category);
-    setSubCategory(product.data.subCategory);
+    setCategory(product.data.category._id);
+    setSubCategory(product.data.subCategory._id);
     setPrice(product.data.price);
     setCategories(categoriesRes.data);
     setSubCategories(subCategoriesRes.data);
@@ -85,19 +121,21 @@ export default function ProductsTable({ data }: { data: any }) {
   };
 
   const handleEdit = () => {
-    ProductService.updateProduct(
-      product._id,
-      name,
-      description,
-      ruName,
-      ruDescription,
-      category,
-      subCategory,
-      price,
-      selectedFile
-    ).then(() => {
-      window.location.href = "/";
-    });
+    if (product) {
+      ProductService.updateProduct(
+        product._id,
+        name,
+        description,
+        ruName,
+        ruDescription,
+        category,
+        subCategory,
+        price,
+        selectedFile
+      ).then(() => {
+        window.location.href = "/";
+      });
+    }
   };
 
   if (!Array.isArray(data)) {
@@ -110,9 +148,9 @@ export default function ProductsTable({ data }: { data: any }) {
       (product) => product.category.uz.name === event.target.value
     );
 
-    if (searchqueary) {
+    if (searchQuery) {
       const newDataSearch = newData.filter((product) =>
-        product.uz.name.toLowerCase().includes(searchqueary.toLowerCase())
+        product.uz.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilterData(newDataSearch);
       if (filteredSubCategory) {
@@ -121,7 +159,7 @@ export default function ProductsTable({ data }: { data: any }) {
         );
         setFilterData(newDataSubSearch);
       }
-    } else if (!searchqueary && filteredSubCategory) {
+    } else if (!searchQuery && filteredSubCategory) {
       const newDataSub = newData.filter(
         (product) => product.subCategory.uz.name === filteredCategory
       );
@@ -139,18 +177,18 @@ export default function ProductsTable({ data }: { data: any }) {
       (product) => product.subCategory.uz.name === event.target.value
     );
 
-    if (searchqueary) {
+    if (searchQuery) {
       const newDataSearch = newData.filter((product) =>
-        product.uz.name.toLowerCase().includes(searchqueary.toLowerCase())
+        product.uz.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilterData(newDataSearch);
       if (filteredCategory) {
         const newDataSearchBase = newDataSearch.filter(
-          (product) => product.Category.uz.name === filteredCategory
+          (product) => product.category.uz.name === filteredCategory
         );
         setFilterData(newDataSearchBase);
       }
-    } else if (!searchqueary && filteredCategory) {
+    } else if (!searchQuery && filteredCategory) {
       const newDataCat = newData.filter(
         (product) => product.category.uz.name === filteredCategory
       );
@@ -161,7 +199,7 @@ export default function ProductsTable({ data }: { data: any }) {
   }
 
   function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setsearchquery(event.target.value);
+    setSearchQuery(event.target.value);
     const newsearchdata = data.filter((product) =>
       product.uz.name.toLowerCase().includes(event.target.value.toLowerCase())
     );
@@ -201,8 +239,8 @@ export default function ProductsTable({ data }: { data: any }) {
           <option selected disabled>
             Kategoriya tanlang
           </option>
-          {filterCategory?.map((e: any, ec: any) => (
-            <option value={e.uz.name} key={ec}>
+          {filterCategory?.map((e) => (
+            <option value={e.uz.name} key={e._id}>
               {e.uz.name}
             </option>
           ))}
@@ -211,8 +249,8 @@ export default function ProductsTable({ data }: { data: any }) {
           <option selected disabled>
             Sub-Kategoriya
           </option>
-          {filterSubCategory?.map((e: any, ec: any) => (
-            <option value={e.uz.name} key={ec}>
+          {filterSubCategory?.map((e) => (
+            <option value={e.uz.name} key={e._id}>
               {e.uz.name}
             </option>
           ))}
@@ -229,43 +267,38 @@ export default function ProductsTable({ data }: { data: any }) {
           </tr>
         </thead>
         <tbody>
-          {filterData.map(
-            (item: any, index: number) => (
-              console.log("Product", item.uz),
-              (
-                <tr key={item.id}>
-                  <td data-label="ID">{index + 1}</td>
-                  <td data-label="Name">{item.uz.name}</td>
-                  <td data-label="Category">{item.category.uz.name}</td>
-                  <td data-label="SubCategory">{item.subCategory.uz.name}</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      gap: "5px",
-                      justifyContent: "flex-end",
-                      flexWrap: "wrap",
-                    }}
-                    data-label="Actions"
-                  >
-                    <button
-                      className="button secondary"
-                      onClick={deleteProduct}
-                      data-id={item._id}
-                    >
-                      O'chirish
-                    </button>
-                    <button
-                      className="button primary"
-                      onClick={handleEditButton}
-                      data-id={item._id}
-                    >
-                      Tahrirlash
-                    </button>
-                  </td>
-                </tr>
-              )
-            )
-          )}
+          {filterData.map((item, index) => (
+            <tr key={item._id}>
+              <td data-label="ID">{index + 1}</td>
+              <td data-label="Name">{item.uz.name}</td>
+              <td data-label="Category">{item.category.uz.name}</td>
+              <td data-label="SubCategory">{item.subCategory.uz.name}</td>
+              <td
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                  justifyContent: "flex-end",
+                  flexWrap: "wrap",
+                }}
+                data-label="Actions"
+              >
+                <button
+                  className="button secondary"
+                  onClick={deleteProduct}
+                  data-id={item._id}
+                >
+                  O'chirish
+                </button>
+                <button
+                  className="button primary"
+                  onClick={handleEditButton}
+                  data-id={item._id}
+                >
+                  Tahrirlash
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
@@ -289,7 +322,7 @@ export default function ProductsTable({ data }: { data: any }) {
           setCategory={setCategory}
           category={category}
           setSubCategory={setSubCategory}
-          subCategory={subCategories}
+          subCategory={subCategory}
           handleFileChange={handleFileChange}
           selectedFile={selectedFile}
           subCategories={subCategories}

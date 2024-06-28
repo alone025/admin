@@ -1,5 +1,49 @@
 import styles from './products-form.module.scss'
 
+interface Category {
+    _id: string;
+    uz: {
+        name: string;
+    };
+    // Add more properties as needed
+}
+
+interface SubCategory {
+    _id: string;
+    uz: {
+        name: string;
+    };
+    category: {
+        _id: string;
+    };
+}
+
+interface ErrorType {
+    name?: string;
+    description?: string;
+    ruName?: string;
+    ruDescription?: string;
+    price?: string;
+    category?: string;
+    subCategory?: string;
+    file?: string;
+}
+
+
+interface ProductsFormProps {
+    setName: (value: string) => void;
+    setDescription: (value: string) => void;
+    setRuName: (value: string) => void;
+    setRuDescription: (value: string) => void;
+    setPrice: (value: string) => void;
+    setCategory: (value: string) => void;
+    setSubCategory: (value: string) => void;
+    handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    categories: Category[];
+    subCategories: SubCategory[];
+    errors: ErrorType;
+    category: string
+}
 
 
 export default function ProductsForm({
@@ -15,10 +59,10 @@ export default function ProductsForm({
     categories,
     subCategories,
     errors
-}: any) {
+}: ProductsFormProps) {
 
     const filteredSubCategories = category
-        ? subCategories.filter((subCategory: any) => subCategory.category._id === category)
+        ? subCategories.filter((subCategory: SubCategory) => subCategory.category._id === category)
         : subCategories;
 
 
@@ -79,7 +123,7 @@ export default function ProductsForm({
                             <option disabled selected value="dd">
                                 Kategoriya tanlang
                             </option>
-                            {categories.map((category: any) => (
+                            {categories.map((category) => (
                                 <option key={category._id} value={category._id}>
                                     {category.uz.name}
                                 </option>
@@ -93,7 +137,7 @@ export default function ProductsForm({
                             <option disabled selected value="dd">
                                 Subkategoriya tanlang
                             </option>
-                            {filteredSubCategories.map((subCategory: any) => (
+                            {filteredSubCategories.map((subCategory) => (
                                 <option key={subCategory._id} value={subCategory._id}>
                                     {subCategory.uz.name}
                                 </option>

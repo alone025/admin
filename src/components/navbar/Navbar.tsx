@@ -3,13 +3,16 @@ import styles from "./navbar.module.scss";
 import { Link } from "react-router-dom";
 import { Context } from "../../main";
 
+interface NavbarProps {
+  toggleSidebar: () => void; 
+  isVisible: boolean;
+}
+
+
 const Navbar = ({
   toggleSidebar,
   isVisible,
-}: {
-  toggleSidebar: any;
-  isVisible: boolean;
-}) => {
+}: NavbarProps) => {
   const { store } = useContext(Context);
   return (
     <div id={!isVisible ? "nav-active":"nav"} >
@@ -26,7 +29,7 @@ const Navbar = ({
           <Link to={"/"} className={styles.admin__link}>
             ADMIN
           </Link>
-          <button onClick={(e) => store.logout()} className="button secondary">
+          <button onClick={() => store.logout()} className="button secondary">
             Chiqish
           </button>
         </div>

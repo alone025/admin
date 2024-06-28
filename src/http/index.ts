@@ -1,7 +1,6 @@
 import axios from "axios";
 import { AuthResponse } from "../models/response/AuthResponse";
 
-
 export const API_URL = `http://1544713-cy69884.twc1.net/api`;
 
 const $api = axios.create({
@@ -11,6 +10,7 @@ const $api = axios.create({
 
 $api.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  config.headers.Cookie = `cookieName=${localStorage.getItem("refreshtoken")}`;
   return config;
 });
 
@@ -27,11 +27,14 @@ $api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
+        console.log("index.ts");
+
         const response = await axios.get<AuthResponse>(
           `${API_URL}/auth/refresh`,
           { withCredentials: true }
         );
         localStorage.setItem("token", response.data.data.accessToken);
+        localStorage.setItem("refreshtoken", response.data.data.refreshToken);
         return $api.request(originalRequest);
       } catch (e) {
         console.log("НЕ АВТОРИЗОВАН");

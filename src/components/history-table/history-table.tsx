@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
 import styles from "./history-table.module.scss";
-import HistoryServise from "../../services/HistoryServise";
+import HistoryService from "../../services/HistoryServise";
+
+interface HistoryItem {
+  _id: string;
+  author: {
+    cashback: string; 
+    summa: string; 
+  };
+  admin_name: string;
+  type: string;
+}
 
 export default function HistoryTable() {
-  const [history, setHistory] = useState<any>([]);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
 
   useEffect(() => {
-    HistoryServise.getOrders().then((data) => {
+    HistoryService.getOrders().then((data) => {
       console.log(data.data);
       setHistory(data.data);
     });
@@ -31,21 +41,17 @@ export default function HistoryTable() {
             <th>Type</th>
           </tr>
         </thead>
-        {
-          history ? (
-            <tbody></tbody>
-          ):(<tbody>
-            {history?.map((item: any, index: number) => (
-              <tr key={item._id}>
-                <td data-label="ID">{index + 1}</td>
-                <td data-label="Name">{item.author.cashback}</td>
-                <td data-label="Name">{item.author.summa}</td>
-                <td data-label="Name">{item.admin_name}</td>
-                <td data-label="Name">{item.type}</td>
-              </tr>
-            ))}
-          </tbody>)
-        }
+        <tbody>
+          {history.map((item, index) => (
+            <tr key={item._id}>
+              <td data-label="ID">{index + 1}</td>
+              <td data-label="Cashback">{item.author.cashback}</td>
+              <td data-label="Summa">{item.author.summa}</td>
+              <td data-label="AdminName">{item.admin_name}</td>
+              <td data-label="Type">{item.type}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

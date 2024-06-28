@@ -2,9 +2,18 @@ import { useEffect, useState } from "react";
 import styles from "./analitika-table.module.scss";
 import AnalizServise from "../../services/AnalitikaServise";
 
+interface AnalizItem {
+  _id: string;
+  author: {
+    firstName: string;
+    lastName: string;
+    telephone: string;
+  };
+  price: number;
+}
 
 export default function AnaltikaTable() {
-  const [analiz, setAnaliz] = useState<any>([]);
+  const [analiz, setAnaliz] = useState<Array<AnalizItem>>([]);
 
   useEffect(() => {
     AnalizServise.getOrders().then((data) => {
@@ -31,7 +40,7 @@ export default function AnaltikaTable() {
           </tr>
         </thead>
         <tbody>
-          {analiz.map((item: any, index: number) => (
+          {analiz.map((item: AnalizItem, index: number) => (
             <tr key={item._id}>
               <td data-label="ID">{index + 1}</td>
               <td data-label="Name">{item.author.firstName}</td>

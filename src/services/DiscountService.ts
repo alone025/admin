@@ -1,46 +1,81 @@
 import axios from "axios";
 import $api, { API_URL } from "../http";
 
+interface DiscountData {
+    uzName: string;
+    uzDescription: string;
+    ruName: string;
+    ruDescription: string;
+    price: string;
+    photo: File | null;
+}
 
-
+interface DiscountResponse {
+    id: string;
+    uzName: string;
+    uzDescription: string;
+    ruName: string;
+    ruDescription: string;
+    price: string;
+    photoUrl: string;
+    // data: {
+    //     data: string
+    // }
+}
 
 export default class DiscountService {
     static async allDiscounts() {
         const discounts = await $api.get('/discount/all');
-        return discounts
+        return discounts.data
     }
 
     static async getDiscount(id: string) {
         const discount = await $api.get(`/discount/get/${id}`);
-        return discount.data
+        return discount.data;
     }
 
+    static async createDiscount(discountData: DiscountData) {
+        const formData = new FormData();
+        formData.append('uzName', discountData.uzName);
+        formData.append('uzDescription', discountData.uzDescription);
+        formData.append('ruName', discountData.ruName);
+        formData.append('ruDescription', discountData.ruDescription);
+        formData.append('price', discountData.price);
+        if (discountData.photo) {
+            formData.append('photo', discountData.photo);
+        }
 
-    static async createDiscount(uzName: string, uzDescription: string, ruName: string, ruDescription: string, price: string, photo: File | null) {
         const response = await axios.post(
             `${API_URL}/discount/create`,
-            { uzName, uzDescription, ruName, ruDescription, price, photo },
+            formData,
             { headers: { 'Content-Type': 'multipart/form-data' } }
         );
 
-        return response.data
+        return response.data as DiscountResponse;
     }
 
     static async deleteDiscount(id: string) {
         const response = await $api.delete(`/discount/delete/${id}`);
-        return response.data
+        return response.data as { message: string };
     }
 
-    static async editDiscount(id: string, data: any) {
-        console.log(data);
-        
+    static async editDiscount(id: string, discountData: DiscountData) {
+        const formData = new FormData();
+        formData.append('uzName', discountData.uzName);
+        formData.append('uzDescription', discountData.uzDescription);
+        formData.append('ruName', discountData.ruName);
+        formData.append('ruDescription', discountData.ruDescription);
+        formData.append('price', discountData.price);
+        if (discountData.photo) {
+            formData.append('photo', discountData.photo);
+        }
 
         const response = await axios.post(
             `${API_URL}/discount/update/${id}`,
-            data,
+            formData,
             { headers: { 'Content-Type': 'multipart/form-data' } }
         );
 
-        return response.data;
-    }    
+        return response.data as DiscountResponse;
+    }
 }

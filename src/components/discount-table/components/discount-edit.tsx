@@ -1,5 +1,20 @@
 import styles from './discount-edit.module.scss'
 
+interface DiscountFormProps {
+    name: string
+    setName: (name: string) => void;
+    setRuName: (name: string) => void;
+    ruName: string
+    setDescription: (description: string) => void;
+    description: string
+    setRuDescription: (description: string) => void;
+    ruDescription: string
+    setPrice: (price: string) => void;
+    price: number|string
+    handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+
 export default function DiscountEditForm({
     setName,
     name,
@@ -12,7 +27,7 @@ export default function DiscountEditForm({
     setPrice,
     price,
     handleFileChange
-}: any) {
+}: DiscountFormProps) {
     return (
         <>
             <div className={styles.container}>

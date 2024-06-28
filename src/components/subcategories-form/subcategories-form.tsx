@@ -1,6 +1,33 @@
-import styles from './subcategories-form.module.scss'
+import styles from './subcategories-form.module.scss';
 
-export default function SubCategoriesForm({ setSubCategoryName, setSubCategoryRuName, categories, setCategory, errors }: { setSubCategoryName: any, setSubCategoryRuName: any, categories: any, setCategory: any, errors: any }) {
+interface Category {
+    _id: string;
+    uz: {
+        name: string;
+    };
+}
+
+interface Errors {
+    subCategoryName?: string;
+    subCategoryRuName?: string;
+    category?: string;
+}
+
+interface SubCategoriesFormProps {
+    setSubCategoryName: (name: string) => void;
+    setSubCategoryRuName: (name: string) => void;
+    categories: Category[];
+    setCategory: (category: string) => void;
+    errors: Errors;
+}
+
+export default function SubCategoriesForm({
+    setSubCategoryName,
+    setSubCategoryRuName,
+    categories,
+    setCategory,
+    errors
+}: SubCategoriesFormProps) {
     return (
         <>
             <div className={styles.container}>
@@ -13,9 +40,7 @@ export default function SubCategoriesForm({ setSubCategoryName, setSubCategoryRu
                             placeholder="Kategoriya nomini yozing"
                         />
                         {errors.subCategoryName && <span className="error">{errors.subCategoryName}</span>}
-
                     </div>
-
                 </div>
 
                 <div className={styles.section}>
@@ -40,14 +65,13 @@ export default function SubCategoriesForm({ setSubCategoryName, setSubCategoryRu
                             <option disabled selected value="dd">
                                 Kategoriya tanlang
                             </option>
-                            {categories.map((category: any) => (
+                            {categories.map((category) => (
                                 <option key={category._id} value={category._id}>
                                     {category.uz.name}
                                 </option>
                             ))}
                         </select>
                         {errors.category && <span className="error">{errors.category}</span>}
-
                     </div>
                 </div>
             </div>

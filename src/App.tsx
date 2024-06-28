@@ -27,6 +27,7 @@ const App: FC = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       store.checkAuth();
+      console.log("app",localStorage.getItem("token"));
     }
     localStorage.setItem("tab", "products");
   }, []);
@@ -35,9 +36,9 @@ const App: FC = () => {
     setVisibles(!isVisible);
     setMainStyle(!mainStyle);
     if (!mainStyle) {
-      setMainStyles("main-div-class-active")
+      setMainStyles("main-div-class-active");
     } else {
-      setMainStyles("main-div-class")
+      setMainStyles("main-div-class");
     }
   };
 
@@ -50,9 +51,14 @@ const App: FC = () => {
   } else {
     return (
       <div className="wrapper">
-        <SideBar isVisible={isVisible} setvisible={setVisibles} setTab={setTab} tab={tab} />
+        <SideBar
+          isVisible={isVisible}
+          setvisible={setVisibles}
+          setTab={setTab}
+          tab={tab}
+        />
         <Navbar toggleSidebar={toggleSidebar} isVisible={isVisible} />
-        <main className={mainStyles} >
+        <main className={mainStyles}>
           {tab == "products" ? <ProductsPage /> : ""}
           {tab == "discounts" ? <DiscountPage /> : ""}
           {tab == "costumers" ? <CostumersPage /> : ""}

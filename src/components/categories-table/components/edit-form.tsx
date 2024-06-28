@@ -1,6 +1,13 @@
 import styles from './edit-form.module.scss';
 
-const CategoryEditForm = ({ setCategoryName, setCategoryRuName, categoryName, categoryRuName }: any) => {
+interface CategoryEditFormProps {
+    setCategoryName: (name: string) => void;
+    setCategoryRuName: (name: string) => void;
+    categoryName: string;
+    categoryRuName: string;
+}
+
+const CategoryEditForm = ({ setCategoryName, setCategoryRuName, categoryName, categoryRuName }: CategoryEditFormProps) => {
     return (
         <>
             <div className={styles.container}>

@@ -1,5 +1,26 @@
 import styles from './discount-form.module.scss'
 
+
+interface Errors {
+    name?: string;
+    description?: string;
+    ruName?: string;
+    ruDescription?: string;
+    price?: string;
+    file?: string;
+}
+
+interface DiscountFormProps {
+    setName: (name: string) => void;
+    setRuName: (name: string) => void;
+    setDescription: (description: string) => void;
+    setRuDescription: (description: string) => void;
+    setPrice: (price: string) => void;
+    errors: Errors;
+    handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+
 export default function DiscountForm({
     setName,
     setRuName,
@@ -8,7 +29,7 @@ export default function DiscountForm({
     setPrice,
     errors,
     handleFileChange
-}: any) {
+}: DiscountFormProps) {
     return (
         <>
             <div className={styles.container}>
