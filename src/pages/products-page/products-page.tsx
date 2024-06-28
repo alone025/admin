@@ -8,11 +8,20 @@ import ProductsModal from '../../components/products-modal/products-modal';
 import {  useEffect, useState } from 'react';
 import ProductService from '../../services/ProductService';
 
+interface SubCategory {
+    _id: string;
+    uz: { name: string };
+    ru: { name: string };
+    category: { _id: string; uz: { name: string } };
+    categoryId: string | null
+  }
+  
+
 export default function ProductsPage() {
     const [tab, setTab] = useState<string>('categories');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [subCategories, setSubCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
     const [products, setProducts] = useState([]);
 
     const openModal = () => setIsModalOpen(true);

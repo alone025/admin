@@ -34,7 +34,7 @@ interface ProductsEditFormProps {
     setSubCategory: (subCategory: string) => void;
     subCategory: string;
     handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    selectedFile: File | null;
+    selectedFile: string | readonly string[] | number | undefined | File | null;
     subCategories: SubCategory[];
     categories: Category[];
 }

@@ -126,12 +126,12 @@ export default class ProductService {
         return response.data;
     }
 
-    static async getCategory(categoryId: string): Promise<Category> {
+    static async getCategory(categoryId: string) {
         const response = await $api.get(`/categories/get/${categoryId}`);
         return response.data;
     }
 
-    static async getSubCategory(subCategoryId: string): Promise<SubCategory> {
+    static async getSubCategory(subCategoryId: string) {
         const response = await $api.get(`/sub-categories/get/${subCategoryId}`);
         return response.data;
     }
